@@ -1,6 +1,6 @@
 package domain
 
-import "github.com/dukk308/golang-clean-arch-starter/pkgs/ddd"
+import "github.com/dukk308/beetool.dev-go-starter/pkgs/ddd"
 
 var (
 	ErrInvalidUsername = &ddd.DomainError{

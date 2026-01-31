@@ -1,6 +1,6 @@
 package config
 
-import "github.com/dukk308/golang-clean-arch-starter/pkgs/global_config"
+import "github.com/dukk308/beetool.dev-go-starter/pkgs/global_config"
 
 type LogOptions struct {
 	LogLevel      string

@@ -4,7 +4,7 @@ import (
 	"context"
 	"os"
 
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/constants"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/constants"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )

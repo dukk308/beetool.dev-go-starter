@@ -3,11 +3,11 @@ package cmd
 import (
 	"os"
 
-	"github.com/dukk308/golang-clean-arch-starter/internal/server"
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/utils"
+	"github.com/dukk308/beetool.dev-go-starter/internal/server"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/utils"
 	"github.com/spf13/cobra"
 
-	_ "github.com/dukk308/golang-clean-arch-starter/api-docs/swagger" //nolint
+	_ "github.com/dukk308/beetool.dev-go-starter/api-docs/swagger" //nolint
 )
 
 var serverCmd = &cobra.Command{

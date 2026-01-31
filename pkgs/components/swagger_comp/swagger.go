@@ -3,7 +3,7 @@ package swagger_comp
 import (
 	"strings"
 
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/logger"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/logger"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"

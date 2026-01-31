@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"runtime/debug"
 
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/components/gin_comp/validation"
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/logger"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/components/gin_comp/validation"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/logger"
 	"github.com/gin-gonic/gin"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
 )

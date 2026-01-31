@@ -3,8 +3,8 @@ package gin_comp
 import (
 	"net/http"
 
-	"github.com/dukk308/golang-clean-arch-starter/internal/common"
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/ddd"
+	"github.com/dukk308/beetool.dev-go-starter/internal/common"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/ddd"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 )

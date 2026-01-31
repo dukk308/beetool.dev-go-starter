@@ -1,4 +1,4 @@
-module github.com/dukk308/golang-clean-arch-starter
+module github.com/dukk308/beetool.dev-go-starter
 
 go 1.25.1
 

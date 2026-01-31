@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/logger"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/logger"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/exporters/stdout/stdouttrace"

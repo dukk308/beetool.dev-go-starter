@@ -1,4 +1,4 @@
-# Golang Clean Architecture
+# Beetool.Dev - Golang Clean Architecture
 
 A Go application built with Clean Architecture principles, featuring dependency injection using Uber FX, Gin web framework, and GORM for database operations.
 
@@ -94,7 +94,7 @@ The project follows Clean Architecture principles with the following layers:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/dukk308/golang-clean-arch-starter.git
+git clone https://github.com/dukk308/beetool.dev-go-starter.git
 cd golang-clean-arc
 ```
 

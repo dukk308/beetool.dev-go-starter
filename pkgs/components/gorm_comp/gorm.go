@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/components/gorm_comp/dialets"
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/logger"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/components/gorm_comp/dialets"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/logger"
 
 	"github.com/pkg/errors"
 	"go.opentelemetry.io/otel"

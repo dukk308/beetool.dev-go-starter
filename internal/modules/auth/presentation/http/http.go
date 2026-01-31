@@ -1,7 +1,7 @@
 package http
 
 import (
-	"github.com/dukk308/golang-clean-arch-starter/internal/modules/auth/application"
+	"github.com/dukk308/beetool.dev-go-starter/internal/modules/auth/application"
 	"github.com/gin-gonic/gin"
 )
 

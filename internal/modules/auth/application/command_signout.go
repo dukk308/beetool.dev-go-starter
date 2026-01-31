@@ -3,8 +3,8 @@ package application
 import (
 	"context"
 
-	"github.com/dukk308/golang-clean-arch-starter/internal/modules/auth/domain"
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/ddd"
+	"github.com/dukk308/beetool.dev-go-starter/internal/modules/auth/domain"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/ddd"
 )
 
 type SignoutCommand struct {

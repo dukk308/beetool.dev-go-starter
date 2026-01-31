@@ -3,8 +3,8 @@ package tracer
 import (
 	"context"
 
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/global_config"
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/logger"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/global_config"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/logger"
 	"go.opentelemetry.io/otel/sdk/trace"
 	"go.uber.org/fx"
 )

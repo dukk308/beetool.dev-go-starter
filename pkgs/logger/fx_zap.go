@@ -1,7 +1,7 @@
 package logger
 
 import (
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/logger/config"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/logger/config"
 	"go.uber.org/fx"
 )
 

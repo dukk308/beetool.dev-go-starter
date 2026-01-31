@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"ariga.io/atlas-provider-gorm/gormschema"
-	"github.com/dukk308/golang-clean-arch-starter/database"
+	"github.com/dukk308/beetool.dev-go-starter/database"
 )
 
 func main() {

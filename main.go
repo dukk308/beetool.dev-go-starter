@@ -1,6 +1,6 @@
 package main
 
-import "github.com/dukk308/golang-clean-arch-starter/cmd"
+import "github.com/dukk308/beetool.dev-go-starter/cmd"
 
 // @title       Golang Clean Arc Starter API
 // @version     1.0

@@ -1,6 +1,6 @@
 package gin_comp
 
-import "github.com/dukk308/golang-clean-arch-starter/pkgs/logger"
+import "github.com/dukk308/beetool.dev-go-starter/pkgs/logger"
 
 type ginLoggerWriter struct {
 	logger logger.Logger

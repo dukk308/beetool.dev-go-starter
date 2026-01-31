@@ -3,11 +3,11 @@ package modules
 import (
 	"context"
 
-	"github.com/dukk308/golang-clean-arch-starter/internal/modules/auth"
-	auth_http "github.com/dukk308/golang-clean-arch-starter/internal/modules/auth/presentation/http"
-	"github.com/dukk308/golang-clean-arch-starter/internal/modules/user"
-	user_http "github.com/dukk308/golang-clean-arch-starter/internal/modules/user/presentation/http"
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/components/gin_comp"
+	"github.com/dukk308/beetool.dev-go-starter/internal/modules/auth"
+	auth_http "github.com/dukk308/beetool.dev-go-starter/internal/modules/auth/presentation/http"
+	"github.com/dukk308/beetool.dev-go-starter/internal/modules/user"
+	user_http "github.com/dukk308/beetool.dev-go-starter/internal/modules/user/presentation/http"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/components/gin_comp"
 	"go.uber.org/fx"
 )
 

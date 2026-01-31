@@ -3,7 +3,7 @@ package gin_comp
 import (
 	"flag"
 
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/global_config"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/global_config"
 )
 
 var (

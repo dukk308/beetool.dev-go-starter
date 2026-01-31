@@ -1,9 +1,9 @@
 package persistence
 
 import (
-	"github.com/dukk308/golang-clean-arch-starter/internal/modules/user/domain"
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/components/gorm_comp"
-	common "github.com/dukk308/golang-clean-arch-starter/pkgs/ddd"
+	"github.com/dukk308/beetool.dev-go-starter/internal/modules/user/domain"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/components/gorm_comp"
+	common "github.com/dukk308/beetool.dev-go-starter/pkgs/ddd"
 	"github.com/google/uuid"
 )
 

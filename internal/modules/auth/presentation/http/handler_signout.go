@@ -1,8 +1,8 @@
 package http
 
 import (
-	"github.com/dukk308/golang-clean-arch-starter/internal/modules/auth/domain"
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/components/gin_comp"
+	"github.com/dukk308/beetool.dev-go-starter/internal/modules/auth/domain"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/components/gin_comp"
 	"github.com/gin-gonic/gin"
 )
 

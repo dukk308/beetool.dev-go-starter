@@ -5,7 +5,7 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/dukk308/golang-clean-arch-starter/internal/modules/user/domain"
+	"github.com/dukk308/beetool.dev-go-starter/internal/modules/user/domain"
 )
 
 type ViewerRepository struct {

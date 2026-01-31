@@ -1,11 +1,11 @@
 package user
 
 import (
-	auth_domain "github.com/dukk308/golang-clean-arch-starter/internal/modules/auth/domain"
-	"github.com/dukk308/golang-clean-arch-starter/internal/modules/user/application"
-	"github.com/dukk308/golang-clean-arch-starter/internal/modules/user/domain"
-	"github.com/dukk308/golang-clean-arch-starter/internal/modules/user/infrastructure/persistence"
-	user_http "github.com/dukk308/golang-clean-arch-starter/internal/modules/user/presentation/http"
+	auth_domain "github.com/dukk308/beetool.dev-go-starter/internal/modules/auth/domain"
+	"github.com/dukk308/beetool.dev-go-starter/internal/modules/user/application"
+	"github.com/dukk308/beetool.dev-go-starter/internal/modules/user/domain"
+	"github.com/dukk308/beetool.dev-go-starter/internal/modules/user/infrastructure/persistence"
+	user_http "github.com/dukk308/beetool.dev-go-starter/internal/modules/user/presentation/http"
 	"go.uber.org/fx"
 )
 

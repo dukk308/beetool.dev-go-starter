@@ -1,7 +1,7 @@
 package domain
 
 import (
-	common "github.com/dukk308/golang-clean-arch-starter/pkgs/ddd"
+	common "github.com/dukk308/beetool.dev-go-starter/pkgs/ddd"
 )
 
 type AuthProvider string

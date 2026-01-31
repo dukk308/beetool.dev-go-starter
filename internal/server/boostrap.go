@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/dukk308/golang-clean-arch-starter/internal/config"
-	"github.com/dukk308/golang-clean-arch-starter/internal/modules"
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/components/gin_comp"
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/components/gorm_comp"
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/components/swagger_comp"
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/global_config"
-	"github.com/dukk308/golang-clean-arch-starter/pkgs/logger"
+	"github.com/dukk308/beetool.dev-go-starter/internal/config"
+	"github.com/dukk308/beetool.dev-go-starter/internal/modules"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/components/gin_comp"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/components/gorm_comp"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/components/swagger_comp"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/global_config"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/logger"
 	"go.uber.org/fx"
 )
 
