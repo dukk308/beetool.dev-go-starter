@@ -7,6 +7,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/constants"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/ddd"
 	"github.com/dukk308/beetool.dev-go-starter/pkgs/logger"
 	"github.com/gin-gonic/gin"
 )
@@ -54,9 +56,11 @@ func Logger(isLogRequest bool, isLogResponse bool) gin.HandlerFunc {
 
 		statusCode := c.Writer.Status()
 		duration := time.Since(start)
+		log := logger.FromContext(c.Request.Context())
 
-		if !excluded && (isLogResponse || statusCode >= 400) {
-			log := logger.FromContext(c.Request.Context())
+		if !excluded && statusCode >= 400 {
+			logError(c, log, statusCode, duration, blw.body.String())
+		} else if !excluded && isLogResponse {
 			logResponse(c, log, statusCode, duration, blw.body.String())
 		}
 	}
@@ -107,7 +111,7 @@ func logRequest(c *gin.Context, logger logger.Logger) {
 	logger.Info(logMsg)
 }
 
-func logResponse(c *gin.Context, logger logger.Logger, statusCode int, duration time.Duration, responseBody string) {
+func logResponse(c *gin.Context, log logger.Logger, statusCode int, duration time.Duration, responseBody string) {
 	logMsg := fmt.Sprintf(
 		"[RESPONSE] %s %s | Status: %d | Duration: %v",
 		c.Request.Method,
@@ -115,16 +119,37 @@ func logResponse(c *gin.Context, logger logger.Logger, statusCode int, duration 
 		statusCode,
 		duration,
 	)
-
 	if responseBody != "" && len(responseBody) < 1000 {
 		logMsg = fmt.Sprintf("%s | Body: %s", logMsg, responseBody)
 	} else if len(responseBody) >= 1000 {
 		logMsg = fmt.Sprintf("%s | Body: [%d bytes]", logMsg, len(responseBody))
 	}
+	log.Info(logMsg)
+}
 
-	if statusCode >= 400 {
-		logger.Error(logMsg)
-	} else {
-		logger.Info(logMsg)
+func logError(c *gin.Context, log logger.Logger, statusCode int, duration time.Duration, responseBody string) {
+	logMsg := fmt.Sprintf(
+		"[RESPONSE] %s %s | Status: %d | Duration: %v",
+		c.Request.Method,
+		c.Request.URL.RequestURI(),
+		statusCode,
+		duration,
+	)
+	if val, exists := c.Get(constants.ContextKeyError); exists {
+		if err, ok := val.(error); ok && err != nil {
+			errToLog := err
+			if domainErr, ok := ddd.AsDomainError(err); ok && domainErr.Unwrap() != nil {
+				if root := domainErr.RootCause(); root != nil {
+					errToLog = root
+				}
+			}
+			logMsg = fmt.Sprintf("%s | Error: %v", logMsg, errToLog)
+		}
 	}
+	if responseBody != "" && len(responseBody) < 1000 {
+		logMsg = fmt.Sprintf("%s | Body: %s", logMsg, responseBody)
+	} else if len(responseBody) >= 1000 {
+		logMsg = fmt.Sprintf("%s | Body: [%d bytes]", logMsg, len(responseBody))
+	}
+	log.Error(logMsg)
 }

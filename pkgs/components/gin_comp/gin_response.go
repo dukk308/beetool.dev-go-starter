@@ -4,12 +4,14 @@ import (
 	"net/http"
 
 	"github.com/dukk308/beetool.dev-go-starter/internal/common"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/constants"
 	"github.com/dukk308/beetool.dev-go-starter/pkgs/ddd"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 )
 
 func ResponseError(c *gin.Context, err error) {
+	c.Set(constants.ContextKeyError, err)
 	if ddd.IsDomainError(err) {
 		domainErr := ddd.ToDomainError(err)
 		statusCode := getStatusCodeForError(domainErr.Code)

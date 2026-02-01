@@ -138,22 +138,22 @@ func normalizeDBError(err error) *DomainError {
 		if field != "" {
 			return NewConflictError(fmt.Sprintf("%s already exists", field))
 		}
-		return NewConflictError("duplicate entry violates unique constraint")
+		return NewConflictError("duplicate entry violates unique constraint").Wrap(err)
 	}
 
 	if isForeignKeyViolation(errMsg) {
-		return NewConflictError("operation violates foreign key constraint")
+		return NewConflictError("Something went wrong").Wrap(err)
 	}
 
 	if isNotNullViolation(errMsg) {
-		return NewValidationError("required field cannot be null")
+		return NewValidationError("required field cannot be null").Wrap(err)
 	}
 
 	if isCheckConstraintViolation(errMsg) {
-		return NewValidationError("data violates check constraint")
+		return NewValidationError("Something went wrong").Wrap(err)
 	}
 
-	return nil
+	return NewInternalError("Something went wrong").Wrap(err)
 }
 
 func isUniqueConstraintViolation(errMsg string) bool {
