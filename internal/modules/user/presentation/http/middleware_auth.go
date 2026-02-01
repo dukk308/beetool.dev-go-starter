@@ -1,10 +1,12 @@
 package http
 
 import (
+	"context"
 	"strings"
 
 	auth_domain "github.com/dukk308/beetool.dev-go-starter/internal/modules/auth/domain"
 	"github.com/dukk308/beetool.dev-go-starter/pkgs/components/gin_comp"
+	"github.com/dukk308/beetool.dev-go-starter/pkgs/constants"
 	"github.com/gin-gonic/gin"
 )
 
@@ -35,6 +37,8 @@ func AuthMiddleware(tokenService auth_domain.ITokenService) gin.HandlerFunc {
 		c.Set("userID", claims.UserID)
 		c.Set("userEmail", claims.Email)
 		c.Set("userRole", claims.Role)
+		ctx := context.WithValue(c.Request.Context(), constants.ContextKeyUserID, claims.UserID)
+		c.Request = c.Request.WithContext(ctx)
 		c.Next()
 	}
 }
