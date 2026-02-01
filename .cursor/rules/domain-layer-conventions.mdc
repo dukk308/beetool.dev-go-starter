@@ -1,0 +1,15 @@
+---
+description: Domain layer — Bussiness logic and model
+globs: internal/modules/**/domain/**
+alwaysApply: false
+---
+
+# Domain Layer
+
+For `internal/modules/**/domain/`
+
+- **Define new models in this module** instead of importing models from other modules.
+- **Do not import** from:
+  - `internal/modules/**/presentation/`
+  - `internal/modules/**/infrastructure/`
+- Application and domain stay independent of presentation and infrastructure.

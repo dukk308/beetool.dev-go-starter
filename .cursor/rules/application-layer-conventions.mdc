@@ -1,0 +1,17 @@
+---
+description:
+globs: internal/modules/**/application/**
+alwaysApply: false
+---
+
+# Domain Layer
+
+For `internal/modules/**/application/`
+
+- **Define new models in this module** instead of importing models from other modules.
+- **Do not import** from:
+  - `internal/modules/**/presentation/`
+  - `internal/modules/**/infrastructure/`
+- Application and domain stay independent of presentation and infrastructure.
+- Command query should has name with pattern command\_{actor}\_name
+  - Example: command_admin_delete_blog

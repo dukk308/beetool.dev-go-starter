@@ -10,7 +10,7 @@ The project follows Domain-Driven Design and separation of concerns with layers:
 
 ![Project Structure](doc/project-structure.png)
 
-See [ai-docs/STRUCTURE.md](ai-docs/STRUCTURE.md) for the full directory tree and layer mapping.
+See [ai-docs/STRUCTURE.md](ai-docs/STRUCTURE.md) for the full directory tree and layer mapping. API prefixes and routes: [ai-docs/API-STRUCTURE.md](ai-docs/API-STRUCTURE.md).
 
 ## Architecture
 

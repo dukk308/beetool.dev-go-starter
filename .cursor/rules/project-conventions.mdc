@@ -1,0 +1,20 @@
+---
+alwaysApply: true
+---
+
+# Project Conventions
+
+## 1. Structure-related features
+
+When developing any feature that affects or depends on **project structure** (layers, modules, bootstrap, paths):
+
+- **Read first**: `ai-docs/STRUCTURE.md`
+- Follow the layer mapping (domain, application, infrastructure, presentation) and path patterns described there.
+
+## 2. New API creation
+
+When **creating a new API** (routes, handlers, prefixes):
+
+- **Read first**: `ai-docs/API-STRUCTURE.md`
+- Use the correct prefix: `/private`, `/admin`, `/public`, or `/` (authenticated).
+- Follow the path pattern: `prefix/{rest}` (e.g. `/v1/notes`, `/admin/v1/users`).
