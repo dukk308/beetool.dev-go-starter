@@ -1,5 +1,5 @@
 data "external_schema" "gorm" {
-  program = ["go", "run", "./scripts/migrate.go"]
+  program = ["go", "run", "./scripts/go/migrate/migrate.go"]
 }
 
 env "gorm" {

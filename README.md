@@ -127,6 +127,45 @@ The server will start on port `8080` by default.
 
 ## Development
 
+### Install require
+
+Tools used for migrations and local development. Install once per machine.
+
+| Tool | Purpose | Install |
+|------|---------|--------|
+| **atlas** | Schema diff and migration validation (uses `atlas.hcl` + GORM). Generates migrations from model changes, hashes, and validates `database/migrations`. | `go install ariga.io/atlas/cmd/atlas@latest` |
+| **goose** | Create and run SQL migrations. This project uses goose-format migrations in `database/migrations`; Atlas generates diffs, goose runs them. | `go install github.com/pressly/goose/v3/cmd/goose@latest` |
+| **dlv** | Delve debugger. Required for **Connect to Air Debugger** (attach on port 2345). | `go install github.com/go-delve/delve/cmd/dlv@latest` |
+| **air** (optional) | Hot reload: rebuild and restart on file save. Use **Run Air (serve)** or **Run Air (worker)** for a smooth dev loop. | `go install github.com/air-verse/air@latest` |
+
+**Quick checks**
+
+```bash
+atlas version
+goose -version
+dlv version
+air -v
+```
+
+**Migrations (atlas + goose)**
+
+- Create a new migration file: `make migration-create-<name>` (goose).
+- Generate migration from GORM changes: `make migration-gen-<name>` (atlas; requires `DB_DSN` and `DB_DSN_SHADOW` in `.env`).
+- Apply migrations: `make migration-up` (goose).
+- Rollback one step: `make migrate-down-1`.
+- Validate and status: `make migration-validate`, `make migration-status`.
+
+### Debugging with Air (auto re-attach on save)
+
+1. Run Air (serve): `air` or **Terminal → Run Task → Run Air (serve)**. For worker: **Run Air (worker)**.
+2. Start debugging: **Run and Debug → Connect to Air Debugger** (F5)
+3. Install the extension so the debugger re-attaches after each save/rebuild:
+   - Clone the extension: `git clone https://github.com/dukk308/vscode-go-air-reconnect-ext`
+   - **Ctrl+Shift+P** → **Developer: Install Extension from Location** → select the cloned folder
+   - Reload the window
+
+After that, saving a file will trigger Air to rebuild; the debug session will end and re-attach automatically after ~2 seconds.
+
 ### Project Structure Guidelines
 
 1. **Domain Layer** (`internal/modules/*/domain/`)
