@@ -1,97 +1,45 @@
 # Beetool.Dev - Golang Clean Architecture
 
-A Go application built with Clean Architecture principles, featuring dependency injection using Uber FX, Gin web framework, and GORM for database operations.
+A Go application built with Clean Architecture principles, dependency injection (Uber FX), Gin, GORM, and optional Redis/Valkey, RabbitMQ, and OpenTelemetry.
 
 ## Overview
 
-This project demonstrates a clean, maintainable architecture for Go applications, following Domain-Driven Design (DDD) principles and separation of concerns. The architecture is organized into distinct layers: Domain, Application, Infrastructure, and Presentation.
+The project follows Domain-Driven Design and separation of concerns with layers: Domain, Application, Infrastructure, and Presentation.
 
 ## Project Structure
 
 ![Project Structure](doc/project-structure.png)
 
-```
-golang-clean-arc/
-├── cmd/                    # Application entry points
-│   ├── root.go            # Root command
-│   ├── server.go          # Server command
-│   └── worker.go          # Worker command
-├── deployment/             # Docker and deployment configurations
-│   ├── development/
-│   ├── local/
-│   └── production/
-├── doc/                    # Documentation and diagrams
-│   ├── clean-architecture.png
-│   └── project-structure.png
-├── internal/               # Internal application code
-│   ├── common/            # Shared utilities
-│   ├── config/            # Configuration management
-│   ├── modules/           # Feature modules
-│   │   └── user/          # User module
-│   │       ├── application/        # Application layer (use cases)
-│   │       ├── domain/             # Domain layer (entities, repositories)
-│   │       ├── infrastructure/     # Infrastructure layer (implementations)
-│   │       └── presentation/       # Presentation layer (HTTP handlers)
-│   └── server/            # Server bootstrap
-├── pkgs/                   # Shared packages
-│   ├── components/        # Reusable components
-│   │   ├── gin_comp/      # Gin HTTP component
-│   │   └── gorm_comp/     # GORM database component
-│   ├── ddd/               # DDD utilities
-│   └── logger/            # Logging utilities
-├── go.mod
-├── go.sum
-├── main.go
-└── Makefile
-```
+See [ai-docs/STRUCTURE.md](ai-docs/STRUCTURE.md) for the full directory tree and layer mapping.
 
 ## Architecture
 
 ![Clean Architecture](doc/clean-architecture.png)
 
-The project follows Clean Architecture principles with the following layers:
-
-### Domain Layer
-
-- **Entities**: Core business models (User, Viewer, Editor, Admin)
-- **Value Objects**: Email, Role
-- **Repository Interfaces**: Define data access contracts
-- **Domain Errors**: Business logic errors
-
-### Application Layer
-
-- **Commands**: Use cases and business logic orchestration
-- **DTOs**: Data transfer objects for use cases
-
-### Infrastructure Layer
-
-- **Persistence**: Database implementations (GORM)
-- **External Services**: Third-party integrations
-
-### Presentation Layer
-
-- **HTTP Handlers**: REST API endpoints
-- **Route Registration**: API routing setup
+- **Domain**: Entities, value objects, repository interfaces, domain errors
+- **Application**: Commands, queries, DTOs
+- **Infrastructure**: Persistence (GORM), external services
+- **Presentation**: HTTP handlers, route registration
 
 ## Features
 
-- ✅ Clean Architecture implementation
-- ✅ Dependency Injection with Uber FX
-- ✅ RESTful API with Gin
-- ✅ Database operations with GORM
-- ✅ User management with role-based access (Viewer, Editor, Admin)
-- ✅ Domain-Driven Design patterns
-- ✅ Modular structure for scalability
+- Clean Architecture with DDD-style modules (auth, note, user)
+- Dependency injection with Uber FX
+- REST API with Gin and Swagger
+- GORM with Postgres, MySQL, SQLite, SQL Server
+- Optional: Redis/Valkey (cache_comp), RabbitMQ (rabbitmq_comp), OpenTelemetry (otel_comp)
+- Role-based access (Viewer, Editor, Admin)
+- Migrations: Atlas (schema diff) + Goose (run SQL)
 
 ## Prerequisites
 
-- Go 1.24.4 or higher
-- MySQL 8.0 or higher
-- Docker (optional, for containerized deployment)
+- Go 1.25.1+
+- PostgreSQL 16+ (default; others supported via GORM)
+- Docker (optional): Postgres, Valkey, RabbitMQ, observability stack
 
 ## Installation
 
-1. Clone the repository:
+1. Clone and enter the repo:
 
 ```bash
 git clone https://github.com/dukk308/beetool.dev-go-starter.git
@@ -104,118 +52,113 @@ cd golang-clean-arc
 go mod download
 ```
 
-3. Configure the database:
+3. Copy env and set DB:
 
-   - Update database settings in `internal/config/config.go` or use environment variables
-   - Create the database schema
+```bash
+cp .env.example .env
+```
 
-4. Run the application:
+Edit `.env`: `DB_DSN`, `DB_DSN_SHADOW` (for Atlas), and any other flags (see `go run main.go outenv`).
+
+4. Start local infra (optional):
+
+```bash
+cd deployment/local
+docker-compose -f docker-compose.infras.yml up -d
+```
+
+5. Run migrations:
+
+```bash
+make migration-up
+```
+
+6. Start the server:
 
 ```bash
 go run main.go serve
 ```
+
+Server listens on port `8080` by default (`GIN_PORT` / `-gin-port`).
 
 ## Usage
 
-### Start Server
+### Commands
 
-```bash
-go run main.go serve
-```
+- `go run main.go serve` — start HTTP server
+- `go run main.go worker` — start worker (if used)
+- `go run main.go outenv` — print env/flag help
 
-The server will start on port `8080` by default.
+### Local infra (Docker)
+
+| Compose file | Services |
+|--------------|----------|
+| `deployment/local/docker-compose.infras.yml` | Postgres, Valkey, RabbitMQ |
+| `deployment/local/docker-compose.o11y.yml` | Alloy, Prometheus, Tempo, Grafana |
 
 ## Development
 
-### Install require
-
-Tools used for migrations and local development. Install once per machine.
+### Required tools
 
 | Tool | Purpose | Install |
 |------|---------|--------|
-| **atlas** | Schema diff and migration validation (uses `atlas.hcl` + GORM). Generates migrations from model changes, hashes, and validates `database/migrations`. | `go install ariga.io/atlas/cmd/atlas@latest` |
-| **goose** | Create and run SQL migrations. This project uses goose-format migrations in `database/migrations`; Atlas generates diffs, goose runs them. | `go install github.com/pressly/goose/v3/cmd/goose@latest` |
-| **dlv** | Delve debugger. Required for **Connect to Air Debugger** (attach on port 2345). | `go install github.com/go-delve/delve/cmd/dlv@latest` |
-| **air** (optional) | Hot reload: rebuild and restart on file save. Use **Run Air (serve)** or **Run Air (worker)** for a smooth dev loop. | `go install github.com/air-verse/air@latest` |
+| **atlas** | Schema diff and migration validation (atlas.hcl + GORM) | `go install ariga.io/atlas/cmd/atlas@latest` |
+| **goose** | Run SQL migrations | `go install github.com/pressly/goose/v3/cmd/goose@latest` |
+| **dlv** | Debugger (Connect to Air Debugger on port 2345) | `go install github.com/go-delve/delve/cmd/dlv@latest` |
+| **air** (optional) | Hot reload | `go install github.com/air-verse/air@latest` |
 
-**Quick checks**
+Check versions: `atlas version`, `goose -version`, `dlv version`, `air -v`.
+
+### Migrations (Atlas + Goose)
+
+- Create migration: `make migration-create-<name>`
+- Generate from GORM: `make migration-gen-<name>` (needs `DB_DSN`, `DB_DSN_SHADOW` in `.env`)
+- Apply: `make migration-up`
+- Rollback one: `make migrate-down-1`
+- Status/validate: `make migration-status`, `make migration-validate`
+
+### Swagger
+
+Regenerate API docs after changing handlers:
 
 ```bash
-atlas version
-goose -version
-dlv version
-air -v
+make swag
 ```
 
-**Migrations (atlas + goose)**
+### Debugging with Air
 
-- Create a new migration file: `make migration-create-<name>` (goose).
-- Generate migration from GORM changes: `make migration-gen-<name>` (atlas; requires `DB_DSN` and `DB_DSN_SHADOW` in `.env`).
-- Apply migrations: `make migration-up` (goose).
-- Rollback one step: `make migrate-down-1`.
-- Validate and status: `make migration-validate`, `make migration-status`.
+1. Run Air: `air` or **Run Task → Run Air (serve)** (or **Run Air (worker)**).
+2. Start debug: **Run and Debug → Connect to Air Debugger** (F5).
+3. Optional: install [vscode-go-air-reconnect](https://github.com/dukk308/vscode-go-air-reconnect-ext) so the debugger re-attaches after Air rebuilds.
 
-### Debugging with Air (auto re-attach on save)
+### Layer guidelines
 
-1. Run Air (serve): `air` or **Terminal → Run Task → Run Air (serve)**. For worker: **Run Air (worker)**.
-2. Start debugging: **Run and Debug → Connect to Air Debugger** (F5)
-3. Install the extension so the debugger re-attaches after each save/rebuild:
-   - Clone the extension: `git clone https://github.com/dukk308/vscode-go-air-reconnect-ext`
-   - **Ctrl+Shift+P** → **Developer: Install Extension from Location** → select the cloned folder
-   - Reload the window
+- **Domain** (`internal/modules/*/domain/`): Entities, repos interfaces, no framework deps
+- **Application** (`internal/modules/*/application/`): Use cases, commands/queries, DTOs
+- **Infrastructure** (`internal/modules/*/infrastructure/`): Repo implementations, DB, external APIs
+- **Presentation** (`internal/modules/*/presentation/`): HTTP handlers, routing
 
-After that, saving a file will trigger Air to rebuild; the debug session will end and re-attach automatically after ~2 seconds.
+### Adding a feature
 
-### Project Structure Guidelines
-
-1. **Domain Layer** (`internal/modules/*/domain/`)
-
-   - Contains pure business logic
-   - No dependencies on external frameworks
-   - Defines repository interfaces
-
-2. **Application Layer** (`internal/modules/*/application/`)
-
-   - Implements use cases
-   - Orchestrates domain logic
-   - Depends only on domain layer
-
-3. **Infrastructure Layer** (`internal/modules/*/infrastructure/`)
-
-   - Implements repository interfaces
-   - Handles external dependencies (database, APIs)
-   - Depends on domain and application layers
-
-4. **Presentation Layer** (`internal/modules/*/presentation/`)
-   - HTTP handlers and routing
-   - Request/response transformation
-   - Depends on application layer
-
-### Adding New Features
-
-1. Create a new module in `internal/modules/`
-2. Follow the layer structure (domain, application, infrastructure, presentation)
-3. Register the module in `internal/modules/fx_features.go`
-4. Add routes in the presentation layer
+1. Add a module under `internal/modules/<name>/` with domain, application, infrastructure, presentation.
+2. Register it in `internal/modules/fx_features.go`.
+3. Wire routes in the module’s presentation layer.
 
 ## Configuration
 
-Configuration is managed in `internal/config/config.go`. You can customize:
-
-- Server port
-- Database connection settings
-- Service name and environment
+- **App config**: `internal/config/` (e.g. auth secrets).
+- **Flags / env**: see `.env.example` and `go run main.go outenv`. Examples: `-db-dsn`, `-gin-port`, `-rabbitmq-url`, `-redis-addrs`, etc.
 
 ## Docker
 
-### Development
+### Local infra only
 
 ```bash
-cd deployment/development
-docker-compose up
+cd deployment/local
+docker-compose -f docker-compose.infras.yml up -d
 ```
 
-### Production
+### Production build
 
 ```bash
 cd deployment/production
@@ -225,11 +168,15 @@ docker run -p 8080:8080 golang-clean-arc
 
 ## Dependencies
 
-- [Gin](https://github.com/gin-gonic/gin) - HTTP web framework
-- [GORM](https://gorm.io/) - ORM library
-- [Uber FX](https://github.com/uber-go/fx) - Dependency injection
-- [Cobra](https://github.com/spf13/cobra) - CLI framework
+- [Gin](https://github.com/gin-gonic/gin) — HTTP framework
+- [GORM](https://gorm.io/) — ORM
+- [Uber FX](https://github.com/uber-go/fx) — Dependency injection
+- [Cobra](https://github.com/spf13/cobra) — CLI
+- [Swag](https://github.com/swaggo/swag) — Swagger
+- [amqp091-go](https://github.com/rabbitmq/amqp091-go) — RabbitMQ client
+- [go-redis](https://github.com/redis/go-redis) — Redis/Valkey
+- [OpenTelemetry](https://opentelemetry.io/) — Tracing (otel_comp)
 
 ## License
 
-This project is open source and available under the MIT License.
+MIT License.
